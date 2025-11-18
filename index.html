@@ -89,5 +89,11 @@
 <body class="bg-pokemon-bg-gradient from-pokemonBgLight to-pokemonBgDark flex flex-col min-h-screen font-sans">
     <div id="root" class="flex-grow"></div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <!-- ADDED SCRIPTS TO FIX DEPLOYMENT -->
+    <!-- 1. Babel for in-browser transpilation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 2. Your application's entry point, marked for Babel to transpile -->
+    <script type="text/babel" data-type="module" src="./index.tsx"></script>
 </body>
 </html>

@@ -47,8 +47,9 @@ const EvolutionModal: React.FC<EvolutionModalProps> = ({ fromPokemon, toPokemonB
         if (amount > 0 && currentVal >= 20) return;
 
         // FIX: Removed unnecessary `|| 0` fallback now that types are stricter.
-        setDistributedAttributes(prev => ({ ...prev, [attr]: prev[attr] + amount }));
-        setPointsSpent(prev => ({ ...prev, [attr]: prev[attr] + amount }));
+        // FIX: Explicitly cast prev[attr] to number to resolve "unknown" type error.
+        setDistributedAttributes(prev => ({ ...prev, [attr]: (prev[attr] as number) + amount }));
+        setPointsSpent(prev => ({ ...prev, [attr]: (prev[attr] as number) + amount }));
     };
 
     const handleConfirmClick = () => {

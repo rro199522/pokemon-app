@@ -251,15 +251,15 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
 
       <SectionHeader title="Attributes" />
       <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-        {/* FIX: Cast Object.keys to an array of valid attribute keys to fix the TypeScript error. */}
-        {(Object.keys(finalFormData.attributes) as Array<keyof typeof finalFormData.attributes>).map(key => {
-          const attrKey = key;
+        {/* FIX: Use Object.entries and cast key to fix TypeScript error. */}
+        {(Object.entries(finalFormData.attributes)).map(([key, value]) => {
+          const attrKey = key as keyof typeof finalFormData.attributes;
           return (
             <InputField 
               key={key} 
               label={key} 
               type="number" 
-              value={finalFormData.attributes[attrKey]} 
+              value={value} 
               onChange={e => handleAttributeChange(attrKey, parseInt(e.target.value) || 10)} 
             />
           );

@@ -1,0 +1,31 @@
+
+[
+    {
+      "id": "accelerock",
+      "name": "Acelerar Rocha",
+      "type": "pedra",
+      "power": ["dex"],
+      "time": "1 ação_bonus",
+      "pp": 15,
+      "duration": "instantanea",
+      "range": "CaC",
+      "description": [
+        "Você colide com um alvo em alta velocidade. Como uma ação bônus, você pode se mover imediatamente até 3m (10ft) e fazer um ataque corpo a corpo contra uma criatura ao alcance sem provocar ataque de oportunidade, causando 1d4 de dano do tipo pedra se acertar."
+      ],
+      "higherlevels": "O dado de dano para este movimento muda para 1d6 no nível 5, 1d10 no nível 10 e 1d12 no nível 17."
+    },
+    {
+      "id": "acid",
+      "name": "Ácido",
+      "type": "veneno",
+      "power": ["dex"],
+      "time": "1 ação",
+      "pp": 15,
+      "duration": "instantanea",
+      "range": "pessoal (cone de 9m / 30ft)",
+      "description": [
+        "Você cria um fluxo de ácido quente em um cone de 9m (30ft), centrado em você. Criaturas pegas no cone devem fazer uma Salvaguarda de DES, sofrendo 1d6 + MOD_MAIOR de dano do tipo veneno em caso de falha, e metade em caso de sucesso."
+      ],
+      "higherlevels": "O dado de dano para este movimento muda para 1d12 no nível 5, 2d8 no nível 10 e 4d6 no nível 17."
+    }
+]

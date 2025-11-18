@@ -1,0 +1,5 @@
+{
+  "name": "Pokedex Multi-Screen App",
+  "description": "A seven-screen Pokedex application showcasing different Pokémon details, built with React, TypeScript, and Tailwind CSS, following the Squirtle UI style.",
+  "requestFramePermissions": []
+}

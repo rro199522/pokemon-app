@@ -1,0 +1,24 @@
+{
+  "tms": [
+    {
+      "id": 1,
+      "move": "preparação",
+      "cost": 8000
+    },
+    {
+      "id": 2,
+      "move": "garra-de-dragão",
+      "cost": 6000
+    },
+    {
+      "id": 3,
+      "move": "psicocarga",
+      "cost": 6000
+    },
+    {
+      "id": 4,
+      "move": "mente-calma",
+      "cost": 5500
+    }
+  ]
+}

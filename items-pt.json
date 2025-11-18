@@ -1,0 +1,40 @@
+{
+	"items": [
+		{
+			"id": "poke-ball",
+			"name": "Poké Ball",
+			"type": "pokebola",
+			"cost": 250,
+			"description": [
+				"Permite que um Treinador tente um Teste de Captura para pegar um Pokémon."
+			],
+			"media": {
+				"sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png"
+			}
+		},
+		{
+			"id": "great-ball",
+			"name": "Great Ball",
+			"type": "pokebola",
+			"cost": 500,
+			"description": [
+				"Permite que um Treinador tente um Teste de Captura para pegar um Pokémon. Reduz a Dificuldade de Captura (DC) em 5."
+			],
+			"media": {
+				"sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/great-ball.png"
+			}
+		},
+		{
+			"id": "ultra-ball",
+			"name": "Ultra Ball",
+			"type": "pokebola",
+			"cost": 1000,
+			"description": [
+				"Permite que um Treinador tente um Teste de Captura para pegar um Pokémon. Reduz a Dificuldade de Captura (DC) em 10."
+			],
+			"media": {
+				"sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/ultra-ball.png"
+			}
+		}
+	]
+}

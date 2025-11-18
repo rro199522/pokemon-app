@@ -1,10 +1,10 @@
 // components/CreateTrainerScreen.tsx
 import React, { useState, useMemo } from 'react';
-import { Trainer } from '../types';
-import { ITEM_DATA } from '../itemData';
-import { TRAINER_PATH_DATA } from '../data/trainerPathData';
-import { calculateFinalTrainerData } from '../utils/trainerUtils';
-import { SPECIALIZATION_RULES } from '../data/specializationData';
+import { Trainer } from '../types.ts';
+import { ITEM_DATA } from '../itemData.ts';
+import { TRAINER_PATH_DATA } from '../data/trainerPathData.ts';
+import { calculateFinalTrainerData } from '../utils/trainerUtils.ts';
+import { SPECIALIZATION_RULES } from '../data/specializationData.ts';
 
 interface CreateTrainerScreenProps {
   initialData: Trainer;
@@ -251,13 +251,13 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
 
       <SectionHeader title="Attributes" />
       <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-        {/* FIX: Use Object.entries and cast key to fix TypeScript error. */}
-        {(Object.entries(finalFormData.attributes)).map(([key, value]) => {
-          const attrKey = key as keyof typeof finalFormData.attributes;
+        {/* FIX: Use Object.keys with a type assertion to safely iterate over attribute keys. */}
+        {(Object.keys(finalFormData.attributes) as Array<keyof typeof finalFormData.attributes>).map((attrKey) => {
+          const value = finalFormData.attributes[attrKey];
           return (
             <InputField 
-              key={key} 
-              label={key} 
+              key={attrKey} 
+              label={attrKey} 
               type="number" 
               value={value} 
               onChange={e => handleAttributeChange(attrKey, parseInt(e.target.value) || 10)} 

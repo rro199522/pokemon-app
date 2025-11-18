@@ -1,9 +1,9 @@
 // pokedexData.ts
-import { Pokemon, PokemonType } from './types';
-import { calculateWeaknesses } from './weaknessCalculator';
+import { Pokemon, PokemonType } from './types.ts';
+import { calculateWeaknesses } from './weaknessCalculator.ts';
 
 // Raw data without the 'weaknesses' property
-const rawPokedexData: Omit<Pokemon, 'weaknesses' | 'weaknesses'>[] = [
+const rawPokedexData: Omit<Pokemon, 'weaknesses'>[] = [
   {
       "id": "bulbasaur",
       "name": "Bulbasaur",
@@ -251,9 +251,8 @@ const rawPokedexData: Omit<Pokemon, 'weaknesses' | 'weaknesses'>[] = [
         "spriteShiny": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/2.png"
       }
     }
-  ]
+  ];
 
-// Dynamically calculate and add weaknesses to each Pokémon
 export const POKEDEX_DATA: Pokemon[] = rawPokedexData.map(pokemon => ({
   ...pokemon,
   nature: 'Hardy',

@@ -1,7 +1,7 @@
 // components/PokemonWeaknessIcon.tsx
 import React from 'react';
-import { PokemonType, PokemonTypeAbbreviation } from '../types';
-import { typeStyles } from './PokemonTypeIcons'; // Centralized icons
+import { PokemonType, PokemonTypeAbbreviation } from '../types.ts';
+import { typeStyles } from './PokemonTypeIcons.tsx'; // Centralized icons
 
 interface PokemonWeaknessIconProps {
   type: PokemonType;

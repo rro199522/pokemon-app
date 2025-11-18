@@ -1,10 +1,10 @@
 // components/MyTeamScreen.tsx
 import React, { useState, useMemo } from 'react';
-import { Pokemon, Trainer } from '../types';
-import { ITEM_DATA } from '../itemData';
-import { TRAINER_PATH_DATA } from '../data/trainerPathData';
-import { calculateFinalTrainerData } from '../utils/trainerUtils';
-import { TRAINER_LEVEL_UP_REQUIREMENTS } from '../data/trainerClassData';
+import { Pokemon, Trainer } from '../types.ts';
+import { ITEM_DATA } from '../itemData.ts';
+import { TRAINER_PATH_DATA } from '../data/trainerPathData.ts';
+import { calculateFinalTrainerData } from '../utils/trainerUtils.ts';
+import { TRAINER_LEVEL_UP_REQUIREMENTS } from '../data/trainerClassData.ts';
 
 interface MyTeamScreenProps {
   trainer: Trainer;

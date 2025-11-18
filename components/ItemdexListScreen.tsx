@@ -1,7 +1,7 @@
 // components/ItemdexListScreen.tsx
 import React, { useState } from 'react';
-import { Item } from '../types';
-import { ITEM_DATA } from '../itemData';
+import { Item } from '../types.ts';
+import { ITEM_DATA } from '../itemData.ts';
 
 const ItemdexListScreen: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

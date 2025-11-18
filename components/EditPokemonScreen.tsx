@@ -1,12 +1,12 @@
 import React, { useState, useMemo } from 'react';
-import { Pokemon, Move, PokemonMoves, PokemonAttributes } from '../types';
-import { TERA_TYPES, FEATS_LIST, NATURE_DATA, applyNature } from '../data/editPokemonData';
-import { ABILITY_DATA } from '../abilityData';
-import { MOVE_DATA } from '../moveData';
-import { ITEM_DATA } from '../itemData';
-import { TRAINER_DATA } from '../trainerData';
-import { TM_DATA } from '../tmData';
-import LevelUpModal from './LevelUpModal';
+import { Pokemon, Move, PokemonMoves, PokemonAttributes } from '../types.ts';
+import { TERA_TYPES, FEATS_LIST, NATURE_DATA, applyNature } from '../data/editPokemonData.ts';
+import { ABILITY_DATA } from '../abilityData.ts';
+import { MOVE_DATA } from '../moveData.ts';
+import { ITEM_DATA } from '../itemData.ts';
+import { TRAINER_DATA } from '../trainerData.ts';
+import { TM_DATA } from '../tmData.ts';
+import LevelUpModal from './LevelUpModal.tsx';
 
 interface EditPokemonScreenProps {
   pokemon: Pokemon;

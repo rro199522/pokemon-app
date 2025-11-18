@@ -1,5 +1,5 @@
 // moveData.ts
-import { Move } from './types';
+import { Move } from './types.ts';
 
 export const MOVE_DATA: Move[] = [
     {

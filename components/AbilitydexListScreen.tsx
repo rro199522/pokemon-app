@@ -1,7 +1,7 @@
 // components/AbilitydexListScreen.tsx
 import React, { useState } from 'react';
-import { Ability } from '../types';
-import { ABILITY_DATA } from '../abilityData';
+import { Ability } from '../types.ts';
+import { ABILITY_DATA } from '../abilityData.ts';
 
 const AbilitydexListScreen: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

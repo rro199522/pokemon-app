@@ -1,8 +1,8 @@
 // data/api.ts
-import { Trainer, Pokemon } from '../types';
-import * as cache from './cache';
-import { TRAINER_DATA } from '../trainerData';
-import { JSONBIN_API_KEY, JSONBIN_BIN_ID } from './config';
+import { Trainer, Pokemon } from '../types.ts';
+import * as cache from './cache.ts';
+import { TRAINER_DATA } from '../trainerData.ts';
+import { JSONBIN_API_KEY, JSONBIN_BIN_ID } from './config.ts';
 
 // --- Mock User Credentials ---
 const USERS: Record<string, string> = {

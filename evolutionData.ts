@@ -1,5 +1,5 @@
 // evolutionData.ts
-import { Evolution } from './types';
+import { Evolution } from './types.ts';
 
 export const EVOLUTION_DATA: Evolution[] = [
     {

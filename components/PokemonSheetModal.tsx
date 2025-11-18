@@ -1,15 +1,15 @@
 // components/PokemonSheetModal.tsx
 import React, { useState, useMemo } from 'react';
-import { Pokemon, Move, PokemonAttributes } from '../types';
-import { ABILITY_DATA } from '../abilityData';
-import { MOVE_DATA } from '../moveData';
-import { TM_DATA } from '../tmData';
-import { TRAINER_DATA } from '../trainerData'; // To get full skill list
-import { EVOLUTION_DATA } from '../evolutionData';
-import { POKEDEX_DATA } from '../pokedexData';
-import EvolutionModal from './EvolutionModal';
-import { NATURE_DATA } from '../data/editPokemonData';
-import { typeStyles } from './PokemonTypeIcons';
+import { Pokemon, Move, PokemonAttributes } from '../types.ts';
+import { ABILITY_DATA } from '../abilityData.ts';
+import { MOVE_DATA } from '../moveData.ts';
+import { TM_DATA } from '../tmData.ts';
+import { TRAINER_DATA } from '../trainerData.ts'; // To get full skill list
+import { EVOLUTION_DATA } from '../evolutionData.ts';
+import { POKEDEX_DATA } from '../pokedexData.ts';
+import EvolutionModal from './EvolutionModal.tsx';
+import { NATURE_DATA } from '../data/editPokemonData.ts';
+import { typeStyles } from './PokemonTypeIcons.tsx';
 
 
 interface PokemonSheetScreenProps {

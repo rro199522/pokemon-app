@@ -1,8 +1,8 @@
 // components/MovedexListScreen.tsx
 import React, { useState } from 'react';
-import { MOVE_DATA } from '../moveData';
-import { Move, PokemonType } from '../types';
-import { typeStyles } from './PokemonTypeIcons';
+import { MOVE_DATA } from '../moveData.ts';
+import { Move, PokemonType } from '../types.ts';
+import { typeStyles } from './PokemonTypeIcons.tsx';
 
 const englishToPortugueseMap: { [key: string]: string } = {
   'normal': 'normal',

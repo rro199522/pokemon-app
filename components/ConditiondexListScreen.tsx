@@ -1,7 +1,7 @@
 // components/ConditiondexListScreen.tsx
 import React, { useState } from 'react';
-import { Condition } from '../types';
-import { CONDITION_DATA } from '../conditionData';
+import { Condition } from '../types.ts';
+import { CONDITION_DATA } from '../conditionData.ts';
 
 const ConditiondexListScreen: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

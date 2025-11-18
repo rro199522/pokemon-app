@@ -1,26 +1,26 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { PokedexHeader } from './components/PokedexHeader';
-import { ScreenName, Pokemon, Trainer, Move } from './types';
-import PokedexListScreen from './components/PokedexListScreen';
-import { PokemonDetailCard } from './components/PokemonDetailCard';
-import { POKEDEX_DATA } from './pokedexData';
-import { HamburgerMenu } from './components/HamburgerMenu';
-import MyTeamScreen from './components/MyTeamScreen';
-import ItemdexListScreen from './components/ItemdexListScreen';
-import TMDexListScreen from './components/TMDexListScreen';
-import MovedexListScreen from './components/MovedexListScreen';
-import AbilitydexListScreen from './components/AbilitydexListScreen';
-import ConditiondexListScreen from './components/ConditiondexListScreen';
-import CreateTrainerScreen from './components/CreateTrainerScreen';
-import PokemonSheetScreen from './components/PokemonSheetModal';
-import EditPokemonScreen from './components/EditPokemonScreen';
-import { MOVE_DATA } from './moveData';
-import { TM_DATA } from './tmData';
-import EvolutionRulesScreen from './components/EvolutionRulesScreen';
-import { TRAINER_LEVEL_UP_REQUIREMENTS } from './data/trainerClassData';
-import { calculateFinalTrainerData } from './utils/trainerUtils';
-import LoginScreen from './components/LoginScreen';
-import * as api from './data/api';
+import { PokedexHeader } from './components/PokedexHeader.tsx';
+import { ScreenName, Pokemon, Trainer, Move } from './types.ts';
+import PokedexListScreen from './components/PokedexListScreen.tsx';
+import { PokemonDetailCard } from './components/PokemonDetailCard.tsx';
+import { POKEDEX_DATA } from './pokedexData.ts';
+import { HamburgerMenu } from './components/HamburgerMenu.tsx';
+import MyTeamScreen from './components/MyTeamScreen.tsx';
+import ItemdexListScreen from './components/ItemdexListScreen.tsx';
+import TMDexListScreen from './components/TMDexListScreen.tsx';
+import MovedexListScreen from './components/MovedexListScreen.tsx';
+import AbilitydexListScreen from './components/AbilitydexListScreen.tsx';
+import ConditiondexListScreen from './components/ConditiondexListScreen.tsx';
+import CreateTrainerScreen from './components/CreateTrainerScreen.tsx';
+import PokemonSheetScreen from './components/PokemonSheetModal.tsx';
+import EditPokemonScreen from './components/EditPokemonScreen.tsx';
+import { MOVE_DATA } from './moveData.ts';
+import { TM_DATA } from './tmData.ts';
+import EvolutionRulesScreen from './components/EvolutionRulesScreen.tsx';
+import { TRAINER_LEVEL_UP_REQUIREMENTS } from './data/trainerClassData.ts';
+import { calculateFinalTrainerData } from './utils/trainerUtils.ts';
+import LoginScreen from './components/LoginScreen.tsx';
+import * as api from './data/api.ts';
 
 const getMoveFromId = (moveId: string | number): Move | undefined => {
     if (typeof moveId === 'number') {

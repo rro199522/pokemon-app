@@ -1,5 +1,5 @@
 // data/cache.ts
-import { Trainer, Pokemon } from '../types';
+import { Trainer, Pokemon } from '../types.ts';
 
 const LOGGED_IN_USER_KEY = 'pokerpg_loggedInUser';
 

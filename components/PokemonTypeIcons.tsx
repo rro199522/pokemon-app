@@ -1,5 +1,5 @@
 // components/PokemonTypeIcons.tsx
-import { PokemonType } from '../types';
+import { PokemonType } from '../types.ts';
 
 // Map Portuguese type names to their respective Tailwind CSS classes for background and text color
 export const typeStyles: Record<string, string> = {

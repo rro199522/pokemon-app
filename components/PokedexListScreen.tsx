@@ -1,7 +1,7 @@
 // components/PokedexListScreen.tsx
 import React, { useState } from 'react';
-import { Pokemon } from '../types';
-import { typeStyles } from './PokemonTypeIcons';
+import { Pokemon } from '../types.ts';
+import { typeStyles } from './PokemonTypeIcons.tsx';
 
 interface PokedexListScreenProps {
   onSelectPokemon: (id: string) => void; // <-- ID is now a string

@@ -1,5 +1,5 @@
 // itemData.ts
-import { Item } from './types';
+import { Item } from './types.ts';
 
 export const ITEM_DATA: Item[] = [
 	{

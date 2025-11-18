@@ -1,6 +1,6 @@
 // components/PokemonTabs.tsx
 import React from 'react';
-import { TabName } from '../types';
+import { TabName } from '../types.ts';
 
 interface PokemonTabsProps {
   activeTab: TabName;

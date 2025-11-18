@@ -1,7 +1,7 @@
 // components/TMDexListScreen.tsx
 import React, { useState } from 'react';
-import { TM } from '../types';
-import { TM_DATA } from '../tmData';
+import { TM } from '../types.ts';
+import { TM_DATA } from '../tmData.ts';
 
 const TMDexListScreen: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

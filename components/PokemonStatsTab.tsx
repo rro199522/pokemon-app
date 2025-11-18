@@ -1,7 +1,7 @@
 // components/PokemonStatsTab.tsx
 import React from 'react';
-import { Pokemon, Stat } from '../types';
-import PokemonWeaknessIcon from './PokemonWeaknessIcon'; // Corrected import path
+import { Pokemon, Stat } from '../types.ts';
+import PokemonWeaknessIcon from './PokemonWeaknessIcon.tsx'; // Corrected import path
 
 interface PokemonStatsTabProps {
   pokemon: Pokemon;

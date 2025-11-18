@@ -1,5 +1,5 @@
 // data/trainerPathData.ts
-import { TrainerPath } from '../types';
+import { TrainerPath } from '../types.ts';
 
 export const TRAINER_PATH_DATA: TrainerPath[] = [
     {
@@ -109,7 +109,7 @@ export const TRAINER_PATH_DATA: TrainerPath[] = [
         features: [
             { level: 5, name: 'Capture Styler', description: 'As a Pokémon Ranger you use a special tool to capture Pokémon called a Capture Styler. At level 5, if you have run all the way around a Pokémon, drawing a closed shape by the path you traveled, you gain a +10 to capturing that Pokémon.' },
             { level: 9, name: 'Partners', description: 'At level 9, after each long rest, you may choose one of your Pokémon to be your partner for the day. Your partner Pokémon may add your Wisdom modifier to any skill check they make. They may also add your Wisdom modifier to attack rolls made against wild Pokémon.' },
-            { level: 15, name: 'Poké Assist', description: "At level 15, your partner Pokémon boosts the power of your Capture Styler. When any of your Pokémon use a move that is the same type as either of your current partner Pokémon's types, the move's attack roll is made with advantage. Additionally, you have advantage on making captures against Pokémon that share a type with your partner Pokémon." }
+            { level: 15, name: 'Poké Assist', description: "At level 15, your partner Pokémon boosts the power of your Capture Styler. When any of your Pokémon use a move that is a similar type as either of your current partner Pokémon's types, the move's attack roll is made with advantage. Additionally, you have advantage on making captures against Pokémon that share a type with your partner Pokémon." }
         ]
     },
     {

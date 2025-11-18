@@ -1,5 +1,5 @@
 // data/specializationData.ts
-import { SpecializationRule } from '../types';
+import { SpecializationRule } from '../types.ts';
 
 // As chaves devem corresponder à propriedade `name` no array `specializations` em `trainerData.ts`.
 export const SPECIALIZATION_RULES: Record<string, SpecializationRule> = {

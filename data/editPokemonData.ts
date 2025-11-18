@@ -1,5 +1,5 @@
 // data/editPokemonData.ts
-import { PokemonAttributes } from '../types';
+import { PokemonAttributes } from '../types.ts';
 
 export interface Nature {
   name: string;

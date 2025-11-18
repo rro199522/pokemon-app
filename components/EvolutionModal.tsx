@@ -1,6 +1,6 @@
 // components/EvolutionModal.tsx
 import React, { useState, useMemo } from 'react';
-import { Pokemon, Evolution, PokemonAttributes } from '../types';
+import { Pokemon, Evolution, PokemonAttributes } from '../types.ts';
 
 interface EvolutionModalProps {
   fromPokemon: Pokemon;
@@ -27,7 +27,6 @@ const EvolutionModal: React.FC<EvolutionModalProps> = ({ fromPokemon, toPokemonB
     }, [evolutionInfo]);
     
     const [distributedAttributes, setDistributedAttributes] = useState<PokemonAttributes>(fromPokemon.attributes);
-    // FIX: Changed state type to PokemonAttributes for better type safety.
     const [pointsSpent, setPointsSpent] = useState<PokemonAttributes>({ str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 });
 
     const totalPointsSpent = useMemo(() => Object.values(pointsSpent).reduce((a, b) => a + b, 0), [pointsSpent]);
@@ -46,10 +45,9 @@ const EvolutionModal: React.FC<EvolutionModalProps> = ({ fromPokemon, toPokemonB
         // Cannot increase stat above 20
         if (amount > 0 && currentVal >= 20) return;
 
-        // FIX: Removed unnecessary `|| 0` fallback now that types are stricter.
-        // FIX: Explicitly cast prev[attr] to number to resolve "unknown" type error.
-        setDistributedAttributes(prev => ({ ...prev, [attr]: (prev[attr] as number) + amount }));
-        setPointsSpent(prev => ({ ...prev, [attr]: (prev[attr] as number) + amount }));
+        // FIX: Explicitly type the 'prev' parameter in the state updater function to ensure correct type inference.
+        setDistributedAttributes((prev: PokemonAttributes) => ({ ...prev, [attr]: prev[attr] + amount }));
+        setPointsSpent((prev: PokemonAttributes) => ({ ...prev, [attr]: prev[attr] + amount }));
     };
 
     const handleConfirmClick = () => {

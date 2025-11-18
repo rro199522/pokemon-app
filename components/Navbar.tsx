@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScreenName } from '../types';
+import { ScreenName } from '../types.ts';
 
 interface NavbarProps {
   currentScreen: ScreenName;

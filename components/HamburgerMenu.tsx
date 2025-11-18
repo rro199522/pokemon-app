@@ -1,6 +1,6 @@
 // components/HamburgerMenu.tsx
 import React from 'react';
-import { ScreenName } from '../types';
+import { ScreenName } from '../types.ts';
 
 interface HamburgerMenuProps {
   isOpen: boolean;

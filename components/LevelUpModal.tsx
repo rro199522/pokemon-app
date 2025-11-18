@@ -1,7 +1,7 @@
 // components/LevelUpModal.tsx
 import React, { useState, useMemo } from 'react';
-import { Pokemon, PokemonAttributes } from '../types';
-import { getEvolutionStageCount } from '../utils/pokemonUtils';
+import { Pokemon, PokemonAttributes } from '../types.ts';
+import { getEvolutionStageCount } from '../utils/pokemonUtils.ts';
 
 interface LevelUpModalProps {
     pokemonToLevelUp: Pokemon;
@@ -23,7 +23,6 @@ const LevelUpModal: React.FC<LevelUpModalProps> = ({ pokemonToLevelUp, asiEvents
     const totalAsiPoints = asiEvents.length * pointsPerASI;
 
     const [distributedAttributes, setDistributedAttributes] = useState<PokemonAttributes>(pokemonToLevelUp.attributes);
-    // FIX: Changed state type to PokemonAttributes for better type safety.
     const [pointsSpent, setPointsSpent] = useState<PokemonAttributes>({ str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 });
     const [peakPowerStat, setPeakPowerStat] = useState<keyof PokemonAttributes | null>(null);
 
@@ -37,10 +36,9 @@ const LevelUpModal: React.FC<LevelUpModalProps> = ({ pokemonToLevelUp, asiEvents
         if (amount > 0 && remainingAsiPoints <= 0) return;
         if (amount > 0 && currentVal >= 20) return;
 
-        // FIX: Removed unnecessary `|| 0` fallback now that types are stricter.
-        // FIX: Explicitly cast prev[attr] to number to resolve "unknown" type error.
-        setDistributedAttributes(prev => ({ ...prev, [attr]: (prev[attr] as number) + amount }));
-        setPointsSpent(prev => ({ ...prev, [attr]: (prev[attr] as number) + amount }));
+        // FIX: Explicitly type the 'prev' parameter in the state updater function to ensure correct type inference.
+        setDistributedAttributes((prev: PokemonAttributes) => ({ ...prev, [attr]: prev[attr] + amount }));
+        setPointsSpent((prev: PokemonAttributes) => ({ ...prev, [attr]: prev[attr] + amount }));
     };
 
     const handleConfirmClick = () => {

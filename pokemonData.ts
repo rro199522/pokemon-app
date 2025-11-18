@@ -3,7 +3,7 @@ import { Pokemon, PokemonType } from './types';
 import { calculateWeaknesses } from './weaknessCalculator';
 
 const rawPokemonData: Omit<Pokemon, 'weaknesses'>[] = [
-  // Squirtle
+  // Bulbasaur
   {
       "id": "bulbasaur",
       "name": "Bulbasaur",

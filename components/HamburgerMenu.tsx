@@ -7,10 +7,9 @@ interface HamburgerMenuProps {
   onClose: () => void;
   onNavigate: (screen: ScreenName) => void;
   currentScreen: ScreenName;
-  onLogout: () => void;
 }
 
-export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isOpen, onClose, onNavigate, currentScreen, onLogout }) => {
+export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isOpen, onClose, onNavigate, currentScreen }) => {
   const screens = Object.values(ScreenName);
 
   return (
@@ -52,14 +51,6 @@ export const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isOpen, onClose, o
             ))}
           </ul>
         </nav>
-        <div className="p-2 border-t border-gray-200">
-           <button
-              onClick={onLogout}
-              className="w-full text-left px-4 py-2 rounded-md text-red-600 font-medium transition-colors duration-200 hover:bg-red-50"
-            >
-              Logout
-            </button>
-        </div>
       </aside>
     </>
   );

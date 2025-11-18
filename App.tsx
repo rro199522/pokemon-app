@@ -19,7 +19,6 @@ import { TM_DATA } from './tmData.ts';
 import EvolutionRulesScreen from './components/EvolutionRulesScreen.tsx';
 import { TRAINER_LEVEL_UP_REQUIREMENTS } from './data/trainerClassData.ts';
 import { calculateFinalTrainerData } from './utils/trainerUtils.ts';
-import LoginScreen from './components/LoginScreen.tsx';
 import * as api from './data/api.ts';
 
 const getMoveFromId = (moveId: string | number): Move | undefined => {
@@ -40,69 +39,29 @@ function App() {
   const [isEditingTrainer, setIsEditingTrainer] = useState(false);
   const [showEvolutionRules, setShowEvolutionRules] = useState(false);
   
-  // Auth and Data State
-  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+  // Simplified Data State
   const [trainerData, setTrainerData] = useState<Trainer | null>(null);
   const [myTeam, setMyTeam] = useState<Pokemon[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const isInitialLoad = useRef(true);
 
-  // Check for existing session on app load
+  // Load app data on initial start
   useEffect(() => {
-    const checkSession = async () => {
-      setIsLoading(true);
-      isInitialLoad.current = true;
-      const sessionData = await api.checkSession();
-      if (sessionData) {
-        setLoggedInUser(sessionData.username);
-        setTrainerData(sessionData.trainer);
-        setMyTeam(sessionData.team);
-      }
-      setIsLoading(false);
-      setTimeout(() => { isInitialLoad.current = false; }, 500);
+    const loadData = async () => {
+        isInitialLoad.current = true;
+        const appData = await api.loadAppData();
+        setTrainerData(appData.trainer);
+        setMyTeam(appData.team);
+        // Using a timeout to prevent the save effect from firing immediately on load
+        setTimeout(() => { isInitialLoad.current = false; }, 500);
     };
-    checkSession();
+    loadData();
   }, []);
 
-  // Save trainer data to cloud when it changes
+  // Save all data to cloud when it changes
   useEffect(() => {
-    if (isInitialLoad.current || !loggedInUser || !trainerData) return;
-    api.saveTrainer(loggedInUser, trainerData);
-  }, [loggedInUser, trainerData]);
-
-  // Save team data to cloud when it changes
-  useEffect(() => {
-    if (isInitialLoad.current || !loggedInUser) return;
-    api.saveTeam(loggedInUser, myTeam);
-  }, [loggedInUser, myTeam]);
-
-  const handleLogin = async (username: string, pass: string) => {
-    setIsLoading(true);
-    isInitialLoad.current = true;
-    try {
-      const data = await api.login(username, pass);
-      if (data) {
-        setLoggedInUser(username);
-        setTrainerData(data.trainer);
-        setMyTeam(data.team);
-        setCurrentScreen(ScreenName.MyTeam);
-      }
-    } catch (error) {
-      alert(error instanceof Error ? error.message : 'Login failed');
-    } finally {
-      setIsLoading(false);
-      setTimeout(() => { isInitialLoad.current = false; }, 500);
-    }
-  };
-
-  const handleLogout = async () => {
-    await api.logout();
-    setLoggedInUser(null);
-    setTrainerData(null);
-    setMyTeam([]);
-    setCurrentScreen(ScreenName.MyTeam); // Or a dedicated login screen
-    setIsMenuOpen(false);
-  };
+    if (isInitialLoad.current || !trainerData) return;
+    api.saveAppData({ trainer: trainerData, team: myTeam });
+  }, [trainerData, myTeam]);
 
   const handleAddPokemonToTeam = (pokemonToAdd: Pokemon) => {
     if (!trainerData) return;
@@ -263,16 +222,12 @@ function App() {
     showBackButton = true;
   } else {
     title = currentScreen;
-    showBackButton = loggedInUser ? currentScreen !== ScreenName.MyTeam : false;
+    showBackButton = currentScreen !== ScreenName.MyTeam;
   }
 
   const renderMainContent = () => {
-    if (isLoading) {
-      return <div className="flex-grow flex items-center justify-center"><p>Loading...</p></div>;
-    }
-
-    if (!loggedInUser || !trainerData) {
-      return <LoginScreen onLogin={handleLogin} />;
+    if (!trainerData) {
+      return <div className="flex-grow flex items-center justify-center"><p>Loading Trainer Data...</p></div>;
     }
 
     if (isEditingPokemon) {
@@ -333,15 +288,12 @@ function App() {
           <div className="flex-grow overflow-y-auto pt-16">
             {renderMainContent()}
           </div>
-          {loggedInUser && (
-            <HamburgerMenu
-              isOpen={isMenuOpen}
-              onClose={() => setIsMenuOpen(false)}
-              onNavigate={handleNavigate}
-              currentScreen={currentScreen}
-              onLogout={handleLogout}
-            />
-          )}
+          <HamburgerMenu
+            isOpen={isMenuOpen}
+            onClose={() => setIsMenuOpen(false)}
+            onNavigate={handleNavigate}
+            currentScreen={currentScreen}
+          />
         </div>
       </main>
     </div>

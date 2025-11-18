@@ -36,9 +36,9 @@ const LevelUpModal: React.FC<LevelUpModalProps> = ({ pokemonToLevelUp, asiEvents
         if (amount > 0 && remainingAsiPoints <= 0) return;
         if (amount > 0 && currentVal >= 20) return;
 
-        // FIX: Explicitly type the 'prev' parameter in the state updater function to ensure correct type inference.
-        setDistributedAttributes((prev: PokemonAttributes) => ({ ...prev, [attr]: prev[attr] + amount }));
-        setPointsSpent((prev: PokemonAttributes) => ({ ...prev, [attr]: prev[attr] + amount }));
+        // FIX: Explicitly cast attribute value to number to allow addition.
+        setDistributedAttributes((prev: PokemonAttributes) => ({ ...prev, [attr]: (prev[attr] as number) + amount }));
+        setPointsSpent((prev: PokemonAttributes) => ({ ...prev, [attr]: (prev[attr] as number) + amount }));
     };
 
     const handleConfirmClick = () => {

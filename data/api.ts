@@ -1,33 +1,22 @@
 // data/api.ts
 import { Trainer, Pokemon } from '../types.ts';
-import * as cache from './cache.ts';
 import { TRAINER_DATA } from '../trainerData.ts';
 import { JSONBIN_API_KEY, JSONBIN_BIN_ID } from './config.ts';
 
-// --- Mock User Credentials ---
-const USERS: Record<string, string> = {
-  'rr': '1255',
-  'mj': '4321',
-};
 
-interface UserData {
+export interface AppData {
   trainer: Trainer;
   team: Pokemon[];
-}
-
-interface AllData {
-  [username: string]: UserData;
 }
 
 /**
  * Reads all data from the JSONBin.
  * @returns All user data from the cloud.
  */
-const readBin = async (): Promise<AllData> => {
-  // FIX: Removed obsolete check for placeholder bin ID that was causing a TypeScript error.
+const readBin = async (): Promise<AppData | null> => {
   if (!JSONBIN_BIN_ID || !JSONBIN_API_KEY) {
     console.warn("JSONBin credentials not set. App will not have permanent storage.");
-    return {};
+    return null;
   }
 
   try {
@@ -43,19 +32,16 @@ const readBin = async (): Promise<AllData> => {
     }
 
     const responseText = await response.text();
-    // Handle completely empty bin from JSONBin which returns empty string
     if (!responseText) {
       console.log("Bin is empty, initializing.");
-      return {};
+      return null;
     }
 
     const data = JSON.parse(responseText);
-    // The actual data is nested under the 'record' property
-    return data.record || {};
+    return data.record || null;
   } catch (error) {
     console.error("Error reading from JSONBin:", error);
-    // If there's an error (e.g., parsing, network), return an empty object to prevent app crash
-    return {};
+    return null;
   }
 };
 
@@ -63,8 +49,7 @@ const readBin = async (): Promise<AllData> => {
  * Writes all data to the JSONBin.
  * @param data The complete data object for all users.
  */
-const writeBin = async (data: AllData): Promise<void> => {
-  // FIX: Removed obsolete check for placeholder bin ID that was causing a TypeScript error.
+const writeBin = async (data: AppData): Promise<void> => {
   if (!JSONBIN_BIN_ID || !JSONBIN_API_KEY) {
     console.warn("JSONBin credentials not set. Skipping write to bin.");
     return;
@@ -89,80 +74,26 @@ const writeBin = async (data: AllData): Promise<void> => {
 
 
 /**
- * Handles user login. Fetches from cloud, creates profile if needed.
+ * Loads the application data from the cloud, or returns default data.
  */
-export const login = async (username: string, password: string): Promise<UserData> => {
-  if (USERS[username] !== password) {
-    throw new Error('Invalid username or password.');
-  }
+export const loadAppData = async (): Promise<AppData> => {
+    const onlineData = await readBin();
 
-  const allData = await readBin();
-  let userData = allData[username];
-  
-  if (!userData) {
-    console.log(`No online data for ${username}, creating default profile.`);
-    userData = {
-      trainer: { ...TRAINER_DATA, name: username },
-      team: [],
+    if (onlineData && onlineData.trainer) {
+        return onlineData;
+    }
+
+    // If no data online, or data is malformed, return default
+    console.log(`No online data found, creating default profile.`);
+    return {
+        trainer: TRAINER_DATA, // Default trainer
+        team: [],
     };
-    allData[username] = userData;
-    await writeBin(allData);
-  }
-  
-  cache.saveSession(username);
-  cache.saveUserData(username, userData); // Also cache locally for offline access/speed
-
-  return userData;
 };
 
 /**
- * Checks for a local session and tries to load data.
- * Does not hit the network, relies on data loaded at login.
+ * Saves the entire application state to the cloud.
  */
-export const checkSession = async (): Promise<{ username: string } & UserData | null> => {
-  const username = cache.loadSession();
-  if (!username) {
-    return null;
-  }
-  
-  // Use locally cached data for session restoration to make it instant
-  const userData = cache.loadUserData(username);
-  if (!userData) {
-    cache.clearSession();
-    return null;
-  }
-
-  return { username, ...userData };
-};
-
-export const logout = async (): Promise<void> => {
-  cache.clearSession();
-};
-
-/**
- * Saves the trainer data to the cloud and local cache.
- */
-export const saveTrainer = async (username: string, trainer: Trainer): Promise<void> => {
-  const allData = await readBin();
-  const userData = allData[username] || { trainer: TRAINER_DATA, team: [] };
-  
-  userData.trainer = trainer;
-  allData[username] = userData;
-
-  await writeBin(allData);
-  cache.saveUserData(username, userData); // Update local cache
-};
-
-/**
- * Saves the team data to the cloud and local cache.
- */
-export const saveTeam = async (username: string, team: Pokemon[]): Promise<void> => {
-  const allData = await readBin();
-  const userData = allData[username] || { trainer: TRAINER_DATA, team: [] };
-
-  userData.team = team;
-  allData[username] = userData;
-
-  await writeBin(allData);
-  cache.saveUserData(username, userData); // Update local cache
+export const saveAppData = async (data: AppData): Promise<void> => {
+    await writeBin(data);
 };

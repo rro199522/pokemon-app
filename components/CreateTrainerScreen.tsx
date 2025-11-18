@@ -251,10 +251,8 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
 
       <SectionHeader title="Attributes" />
       <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-        {/* FIX: Use Object.keys with a type assertion to safely iterate over attribute keys. */}
-        {(Object.keys(finalFormData.attributes) as Array<keyof typeof finalFormData.attributes>).map((attrKey) => {
-          const value = finalFormData.attributes[attrKey];
-          return (
+        {/* FIX: Use Object.entries with a type assertion to safely iterate over attribute keys and prevent type errors. */}
+        {(Object.entries(finalFormData.attributes) as [keyof Trainer['attributes'], number][]).map(([attrKey, value]) => (
             <InputField 
               key={attrKey} 
               label={attrKey} 
@@ -262,8 +260,7 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
               value={value} 
               onChange={e => handleAttributeChange(attrKey, parseInt(e.target.value) || 10)} 
             />
-          );
-        })}
+        ))}
       </div>
 
       <SectionHeader title="Proficiencies" />

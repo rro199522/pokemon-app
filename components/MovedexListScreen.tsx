@@ -1,8 +1,12 @@
+
 // components/MovedexListScreen.tsx
 import React, { useState } from 'react';
-import { MOVE_DATA } from '../moveData.ts';
-import { Move, PokemonType } from '../types.ts';
+import { Move } from '../types.ts';
 import { typeStyles } from './PokemonTypeIcons.tsx';
+
+interface MovedexListScreenProps {
+    moves: Move[];
+}
 
 const englishToPortugueseMap: { [key: string]: string } = {
   'normal': 'normal',
@@ -28,10 +32,10 @@ const englishToPortugueseMap: { [key: string]: string } = {
 };
 
 
-const MovedexListScreen: React.FC = () => {
+const MovedexListScreen: React.FC<MovedexListScreenProps> = ({ moves }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredMoves = MOVE_DATA.filter((move) =>
+  const filteredMoves = moves.filter((move) =>
     move.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
   
@@ -89,11 +93,9 @@ const MovedexListScreen: React.FC = () => {
                     </div>
                     
                     {/* Higher Levels Damage */}
-                    {/* FIX: Corrected typo from `higherlevels` to `higherLevels`. */}
                     {move.higherLevels && (
                       <div>
                           <p className="text-sm font-semibold text-gray-800 mb-2">Dano por Nível</p>
-                          {/* FIX: Corrected typo from `higherlevels` to `higherLevels`. */}
                           <p className="text-sm text-gray-700">{move.higherLevels}</p>
                       </div>
                     )}

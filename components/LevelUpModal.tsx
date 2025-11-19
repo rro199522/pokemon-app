@@ -26,7 +26,7 @@ const LevelUpModal: React.FC<LevelUpModalProps> = ({ pokemonToLevelUp, asiEvents
     const [pointsSpent, setPointsSpent] = useState<PokemonAttributes>({ str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 });
     const [peakPowerStat, setPeakPowerStat] = useState<keyof PokemonAttributes | null>(null);
 
-    const totalPointsSpent = useMemo(() => Object.values(pointsSpent).reduce((a, b) => a + b, 0), [pointsSpent]);
+    const totalPointsSpent = useMemo(() => Object.values(pointsSpent).reduce((a: number, b: number) => a + b, 0), [pointsSpent]);
     const remainingAsiPoints = totalAsiPoints - totalPointsSpent;
 
     const handleAttributeChange = (attr: keyof PokemonAttributes, amount: number) => {

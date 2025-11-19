@@ -29,7 +29,7 @@ const EvolutionModal: React.FC<EvolutionModalProps> = ({ fromPokemon, toPokemonB
     const [distributedAttributes, setDistributedAttributes] = useState<PokemonAttributes>(fromPokemon.attributes);
     const [pointsSpent, setPointsSpent] = useState<PokemonAttributes>({ str: 0, dex: 0, con: 0, int: 0, wis: 0, cha: 0 });
 
-    const totalPointsSpent = useMemo(() => Object.values(pointsSpent).reduce((a, b) => a + b, 0), [pointsSpent]);
+    const totalPointsSpent = useMemo(() => Object.values(pointsSpent).reduce((a: number, b: number) => a + b, 0), [pointsSpent]);
     const remainingPoints = asiPointsToDistribute - totalPointsSpent;
 
     const handleAttributeChange = (attr: keyof PokemonAttributes, amount: number) => {

@@ -1,12 +1,16 @@
+
 // components/TMDexListScreen.tsx
 import React, { useState } from 'react';
 import { TM } from '../types.ts';
-import { TM_DATA } from '../tmData.ts';
 
-const TMDexListScreen: React.FC = () => {
+interface TMDexListScreenProps {
+    tms: TM[];
+}
+
+const TMDexListScreen: React.FC<TMDexListScreenProps> = ({ tms }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredTMs = TM_DATA.filter((tm) =>
+  const filteredTMs = tms.filter((tm) =>
     tm.move.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

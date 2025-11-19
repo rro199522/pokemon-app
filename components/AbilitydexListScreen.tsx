@@ -1,12 +1,16 @@
+
 // components/AbilitydexListScreen.tsx
 import React, { useState } from 'react';
 import { Ability } from '../types.ts';
-import { ABILITY_DATA } from '../abilityData.ts';
 
-const AbilitydexListScreen: React.FC = () => {
+interface AbilitydexListScreenProps {
+    abilities: Ability[];
+}
+
+const AbilitydexListScreen: React.FC<AbilitydexListScreenProps> = ({ abilities }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredAbilities = ABILITY_DATA.filter((ability) =>
+  const filteredAbilities = abilities.filter((ability) =>
     ability.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

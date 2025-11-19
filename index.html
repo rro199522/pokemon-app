@@ -1,99 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokedex Multi-Screen App</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://aistudiocdn.com/react@^19.2.0",
-        "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-        "react/": "https://aistudiocdn.com/react@^19.2.0/"
-      }
-    }
-    </script>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-      /* Expose custom colors as CSS variables for JavaScript access */
-      :root {
-        --tw-color-agua: #61a3e8;
-        --tw-color-fogo: #f08030;
-        --tw-color-planta: #78c850;
-        --tw-color-eletrico: #f8d030;
-        --tw-color-psiquico: #f85888;
-        --tw-color-sombrio: #705848;
-        --tw-color-normal: #a8a878;
-        --tw-color-lutador: #c03028;
-        --tw-color-voador: #a890f0;
-        --tw-color-veneno: #a040a0;
-        --tw-color-terra: #e0c068;
-        --tw-color-pedra: #b8a038;
-        --tw-color-inseto: #a8b820;
-        --tw-color-fantasma: #705898;
-        --tw-color-dragao: #7038f8;
-        --tw-color-metal: #b8b8d0;
-        --tw-color-gelo: #98d8d8;
-        --tw-color-fada: #ee99ac;
-      }
-    </style>
-    <script>
-        tailwind.config = {
-          theme: {
-            extend: {
-              fontFamily: {
-                sans: ['Inter', 'sans-serif'],
-              },
-              colors: {
-                // Background colors
-                pokemonBgLight: '#e0f2f7',
-                pokemonBgDark: '#aed6f1',
-                
-                // Pokemon Type Colors (Mapped to new Portuguese names for consistency)
-                water: 'var(--tw-color-agua)',
-                fire: 'var(--tw-color-fogo)',
-                grass: 'var(--tw-color-planta)', // Still using 'grass' class but it maps to '--tw-color-planta'
-                electric: 'var(--tw-color-eletrico)',
-                psychic: 'var(--tw-color-psiquico)',
-                dark: 'var(--tw-color-sombrio)',
-                normal: 'var(--tw-color-normal)',
-                fighting: 'var(--tw-color-lutador)',
-                flying: 'var(--tw-color-voador)',
-                poison: 'var(--tw-color-veneno)',
-                ground: 'var(--tw-color-terra)',
-                rock: 'var(--tw-color-pedra)',
-                bug: 'var(--tw-color-inseto)',
-                ghost: 'var(--tw-color-fantasma)',
-                dragon: 'var(--tw-color-dragao)',
-                steel: 'var(--tw-color-metal)',
-                ice: 'var(--tw-color-gelo)',
-                fairy: 'var(--tw-color-fada)',
-              },
-              // Removed gradientColorStops and backgroundImage for pokemon-bg-gradient as per user request
-              keyframes: {
-                'fade-in': {
-                  '0%': { opacity: '0', transform: 'translateY(10px)' },
-                  '100%': { opacity: '1', transform: 'translateY(0)' },
-                },
-              },
-              animation: {
-                'fade-in': 'fade-in 0.5s ease-out forwards',
-              },
-            },
-          },
-        }
-    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "vite": "https://aistudiocdn.com/vite@^7.2.2"
+  }
+}
+</script>
 </head>
-<body class="bg-pokemon-bg-gradient from-pokemonBgLight to-pokemonBgDark flex flex-col min-h-screen font-sans">
+  <body class="bg-gradient-to-b from-pokemonBgLight to-pokemonBgDark flex flex-col min-h-screen font-sans">
     <div id="root" class="flex-grow"></div>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    
-    <!-- ADDED SCRIPTS TO FIX DEPLOYMENT -->
-    <!-- 1. Babel for in-browser transpilation -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- 2. Your application's entry point, marked for Babel to transpile -->
-    <script type="text/babel" data-type="module" src="./index.tsx"></script>
-</body>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>

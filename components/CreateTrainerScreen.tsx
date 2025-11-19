@@ -1,3 +1,4 @@
+
 // components/CreateTrainerScreen.tsx
 import React, { useState, useMemo } from 'react';
 import { Trainer } from '../types.ts';
@@ -5,6 +6,7 @@ import { ITEM_DATA } from '../itemData.ts';
 import { TRAINER_PATH_DATA } from '../data/trainerPathData.ts';
 import { calculateFinalTrainerData } from '../utils/trainerUtils.ts';
 import { SPECIALIZATION_RULES } from '../data/specializationData.ts';
+import SectionHeader from './SectionHeader.tsx';
 
 interface CreateTrainerScreenProps {
   initialData: Trainer;
@@ -12,27 +14,17 @@ interface CreateTrainerScreenProps {
   onCancel: () => void;
 }
 
-const SectionHeader: React.FC<{ title: string }> = ({ title }) => (
-  <div className="relative bg-gray-700 text-white font-bold py-1.5 px-4 my-4">
-    <h3 className="relative z-10 text-lg">{title}</h3>
-    <div
-      className="absolute top-0 right-0 h-full w-5 bg-gray-700"
-      style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 100%)' }}
-    ></div>
-  </div>
-);
-
 const InputField: React.FC<{ label: string; value: string | number; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; type?: string; placeholder?: string; readOnly?: boolean }> = 
 ({ label, value, onChange, type = 'text', placeholder, readOnly = false }) => (
     <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+        <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">{label}</label>
         <input 
             type={type} 
             value={value} 
             onChange={onChange}
             placeholder={placeholder}
             readOnly={readOnly}
-            className={`w-full p-2 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${readOnly ? 'opacity-70' : ''}`}
+            className={`w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm transition-shadow ${readOnly ? 'opacity-70 cursor-not-allowed' : ''}`}
         />
     </div>
 );
@@ -89,10 +81,9 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
         case 'nurse':
             return skillName === 'Medicina';
         case 'ranger':
-            // Ranger gets proficiency in Nature (Ciências) and Survival (Sobrevivência)
             return skillName === 'Ciências' || skillName === 'Sobrevivência';
         case 'pokemon-collector':
-             return skillName === 'Adestramento'; // This path grants Expertise
+             return skillName === 'Adestramento';
         default:
             return false;
     }
@@ -106,7 +97,6 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
             newFormData.biography = { ...newFormData.biography, [key]: value };
         } else if (key === 'level') {
             const newLevel = parseInt(value, 10) || 1;
-            // Update level and let finalFormData recalculate everything
             newFormData.level = newLevel;
         } else {
             (newFormData as any)[key] = value;
@@ -135,9 +125,9 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
     const newProficiencies = [...baseFormData.proficiencies];
     const currentLevel = newProficiencies[index].level;
 
-    if(level === 1) { // First checkbox (Proficiency)
+    if(level === 1) { 
       newProficiencies[index].level = currentLevel === 1 ? 0 : 1;
-    } else { // Second checkbox (Expertise)
+    } else { 
       newProficiencies[index].level = currentLevel === 2 ? 1 : 2;
     }
     setBaseFormData(prev => ({...prev, proficiencies: newProficiencies}));
@@ -236,7 +226,7 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
   };
   
   return (
-    <div className="p-4 text-gray-800 text-sm animate-fade-in">
+    <div className="p-4 text-gray-800 text-sm animate-fade-in bg-white pb-20">
       <SectionHeader title="Basic Info" />
       <div className="grid grid-cols-2 gap-4">
         <InputField label="Name" value={baseFormData.name} onChange={e => handleInputChange('name', 'name', e.target.value)} />
@@ -251,7 +241,6 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
 
       <SectionHeader title="Attributes" />
       <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-        {/* FIX: Use Object.entries with a type assertion to safely iterate over attribute keys and prevent type errors. */}
         {(Object.entries(finalFormData.attributes) as [keyof Trainer['attributes'], number][]).map(([attrKey, value]) => (
             <InputField 
               key={attrKey} 
@@ -264,7 +253,7 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
       </div>
 
       <SectionHeader title="Proficiencies" />
-      <p className="text-xs text-gray-500 -mt-2 mb-2">First checkbox is proficiency. Second is expertise.</p>
+      <p className="text-xs text-gray-500 -mt-2 mb-2 italic">First checkbox: Proficiency. Second: Expertise.</p>
       <div className="grid grid-cols-2 gap-x-6 gap-y-2">
         {finalFormData.proficiencies.map((prof, index) => {
           const isGrantedBySpec = isProficiencyGrantedBySpec(prof.name);
@@ -276,14 +265,14 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
             <div key={prof.name} className="flex items-center">
               <input type="checkbox" checked={prof.level >= 1} onChange={() => handleProficiencyChange(index, 1)} disabled={isDisabled} className="form-checkbox h-4 w-4 text-blue-600 rounded-sm disabled:opacity-50" />
               <input type="checkbox" checked={prof.level === 2} onChange={() => handleProficiencyChange(index, 2)} disabled={isDisabled} className="form-checkbox h-4 w-4 text-yellow-500 ml-1 rounded-sm disabled:opacity-50" />
-              <span className="ml-2 text-sm">{prof.name} ({prof.attribute})</span>
+              <span className={`ml-2 text-sm ${prof.level > 0 ? 'text-gray-900 font-medium' : 'text-gray-600'}`}>{prof.name} ({prof.attribute})</span>
             </div>
           );
         })}
       </div>
 
       <SectionHeader title="Saving Throws" />
-      <p className="text-xs text-gray-500 -mt-2 mb-2">Proficient in {savingThrowsProficientCount} of {maxSavingThrowsAllowed} allowed.</p>
+      <p className="text-xs text-gray-500 -mt-2 mb-2 italic">Proficient in {savingThrowsProficientCount} of {maxSavingThrowsAllowed} allowed.</p>
        <div className="grid grid-cols-2 gap-x-6 gap-y-2">
         {baseFormData.savingThrows.map((save, index) => (
           <div key={save.name} className="flex items-center">
@@ -291,29 +280,29 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
               type="checkbox" 
               checked={save.proficient} 
               onChange={() => handleSavingThrowChange(index)} 
-              className="form-checkbox h-4 w-4 text-blue-600" 
-              disabled={save.name === 'Charisma'} // Primary ability is always proficient
+              className="form-checkbox h-4 w-4 text-blue-600 rounded-sm" 
+              disabled={save.name === 'Charisma'} 
             />
-            <span className="ml-2">{save.name}</span>
+            <span className={`ml-2 text-sm ${save.proficient ? 'text-gray-900 font-medium' : 'text-gray-600'}`}>{save.name}</span>
           </div>
         ))}
       </div>
 
       <SectionHeader title="Specializations" />
-      <div className="text-center font-bold p-2 rounded-md bg-blue-100 text-blue-700 mb-2">
+      <div className={`text-center font-bold p-2 rounded-md mb-4 text-sm ${specializationPointsSpent > specializationPointsAvailable ? 'bg-red-100 text-red-700' : 'bg-blue-50 text-blue-700'}`}>
         {specializationPointsSpent} / {specializationPointsAvailable} Points Spent
       </div>
       <div className="grid grid-cols-2 gap-4">
         {baseFormData.specializations.map((spec, index) => (
           <div key={spec.name}>
-            <p className="text-xs font-semibold capitalize">{spec.name} ({spec.type})</p>
-            <div className="flex items-center gap-1 mt-1 p-1 rounded-full" style={{backgroundColor: `${spec.color}40`}}>
-               <div className="w-6 h-6 rounded-full text-white flex items-center justify-center font-bold text-xs" style={{backgroundColor: spec.color}}>
+            <p className="text-xs font-semibold capitalize text-gray-700 mb-1">{spec.name} ({spec.type})</p>
+            <div className="flex items-center gap-1 mt-1 p-1 rounded-full border border-gray-100 shadow-sm" style={{backgroundColor: `${spec.color}10`}}>
+               <div className="w-6 h-6 rounded-full text-white flex items-center justify-center font-bold text-xs shadow-sm" style={{backgroundColor: spec.color}}>
                    {spec.value}
                 </div>
                {Array.from({length: 3}).map((_, i) => (
                    <button key={i} onClick={() => handleSpecializationChange(index, i)} 
-                   className={`w-3 h-3 rounded-full border-2`}
+                   className={`w-3 h-3 rounded-full border transition-colors`}
                    style={{borderColor: spec.color, backgroundColor: i < spec.value ? spec.color : 'transparent'}}
                    ></button>
                ))}
@@ -326,19 +315,20 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
       <select
           value={baseFormData.trainerPath}
           onChange={e => handleInputChange('trainerPath', 'trainerPath', e.target.value)}
-          className="w-full p-2 bg-gray-100 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
       >
           {TRAINER_PATH_DATA.map(path => <option key={path.id} value={path.id}>{path.name}</option>)}
       </select>
       {selectedPathDetails && (
-        <div className="mt-4 p-3 bg-gray-100 border border-gray-200 rounded-md text-xs space-y-2">
-            <p className="italic text-gray-600">{selectedPathDetails.description}</p>
+        <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-lg text-xs space-y-3">
+            <p className="italic text-blue-900">{selectedPathDetails.description}</p>
             <div>
-                <h4 className="font-bold text-gray-800 mb-1">Features by Level:</h4>
-                <ul className="list-disc list-inside space-y-1 pl-2">
+                <h4 className="font-bold text-blue-800 mb-2 uppercase tracking-wide text-[10px]">Path Features:</h4>
+                <ul className="space-y-2">
                     {selectedPathDetails.features.map(feature => (
-                        <li key={feature.name}>
-                            <strong className="font-semibold">Lvl {feature.level}: {feature.name}</strong>
+                        <li key={feature.name} className="bg-white p-2 rounded border border-blue-100 shadow-sm">
+                            <strong className="font-bold text-gray-800 block mb-0.5">Lvl {feature.level}: {feature.name}</strong>
+                            <span className="text-gray-600">{feature.description}</span>
                         </li>
                     ))}
                 </ul>
@@ -347,9 +337,9 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
       )}
       
       <SectionHeader title="Inventory" />
-        <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg">
+        <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
             <InputField 
-                label="Money" 
+                label="Money (₽)" 
                 type="number" 
                 value={baseFormData.inventory.money} 
                 onChange={e => {
@@ -357,17 +347,17 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
                     setBaseFormData(prev => ({ ...prev, inventory: newInventory }));
                 }} 
             />
-            <h4 className="font-bold mt-4 mb-2 text-gray-700">Items</h4>
+            <h4 className="font-bold mt-4 mb-2 text-gray-700 text-xs uppercase tracking-wide">Items</h4>
             <div className="space-y-2">
                 {baseFormData.inventory.items.map((item, index) => {
                     const itemDetails = ITEM_DATA.find(i => i.id === item.id);
                     return (
-                        <div key={item.id + index} className="flex items-center justify-between bg-gray-100 p-2 rounded">
-                            <span className="text-sm">{itemDetails?.name}</span>
+                        <div key={item.id + index} className="flex items-center justify-between bg-white p-2 rounded border border-gray-200 shadow-sm">
+                            <span className="text-sm font-medium text-gray-700">{itemDetails?.name}</span>
                             <div className="flex items-center gap-2">
-                                <button onClick={() => handleItemQuantityChange(index, -1)} className="w-6 h-6 rounded-md bg-red-200 text-red-800 font-bold">-</button>
-                                <span className="font-bold w-6 text-center">{item.quantity}</span>
-                                <button onClick={() => handleItemQuantityChange(index, 1)} className="w-6 h-6 rounded-md bg-green-200 text-green-800 font-bold">+</button>
+                                <button onClick={() => handleItemQuantityChange(index, -1)} className="w-6 h-6 rounded bg-red-100 text-red-700 font-bold hover:bg-red-200 transition-colors">-</button>
+                                <span className="font-bold w-6 text-center text-sm">{item.quantity}</span>
+                                <button onClick={() => handleItemQuantityChange(index, 1)} className="w-6 h-6 rounded bg-green-100 text-green-700 font-bold hover:bg-green-200 transition-colors">+</button>
                             </div>
                         </div>
                     );
@@ -375,21 +365,22 @@ const CreateTrainerScreen: React.FC<CreateTrainerScreenProps> = ({ initialData, 
             </div>
             <div className="mt-4 pt-4 border-t border-gray-200 flex items-end gap-2">
                 <div className="flex-grow">
-                     <label className="block text-sm font-medium text-gray-700 mb-1">Add Item</label>
+                     <label className="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Add Item</label>
                      <select 
                         value={newItemId} 
                         onChange={e => setNewItemId(e.target.value)} 
-                        className="w-full p-2 bg-gray-100 border border-gray-300 rounded-md"
+                        className="w-full p-2.5 bg-white border border-gray-300 rounded-lg text-sm"
                      >
                         {ITEM_DATA.map(item => <option key={item.id} value={item.id}>{item.name} (${item.cost})</option>)}
                      </select>
                 </div>
-                <button onClick={handleAddNewItem} className="px-4 h-9 bg-blue-600 text-white font-semibold rounded-md">Add</button>
+                <button onClick={handleAddNewItem} className="px-4 h-10 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Add</button>
             </div>
         </div>
       
-      <div className="mt-6">
-        <button onClick={handleSaveClick} className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl">Salvar Treinador</button>
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 flex gap-4 max-w-[393px] mx-auto">
+        <button onClick={onCancel} className="flex-1 py-3 text-gray-600 font-bold hover:bg-gray-50 rounded-xl transition-colors">Cancel</button>
+        <button onClick={handleSaveClick} className="flex-[2] bg-blue-600 text-white font-bold py-3 rounded-xl shadow-lg hover:bg-blue-700 transition-transform active:scale-95">Save Trainer</button>
       </div>
     </div>
   );

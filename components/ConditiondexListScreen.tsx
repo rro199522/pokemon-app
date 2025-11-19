@@ -1,12 +1,16 @@
+
 // components/ConditiondexListScreen.tsx
 import React, { useState } from 'react';
 import { Condition } from '../types.ts';
-import { CONDITION_DATA } from '../conditionData.ts';
 
-const ConditiondexListScreen: React.FC = () => {
+interface ConditiondexListScreenProps {
+    conditions: Condition[];
+}
+
+const ConditiondexListScreen: React.FC<ConditiondexListScreenProps> = ({ conditions }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredConditions = CONDITION_DATA.filter((condition) =>
+  const filteredConditions = conditions.filter((condition) =>
     condition.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

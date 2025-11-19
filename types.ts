@@ -1,3 +1,4 @@
+
 // types.ts
 
 // --- Pokedex V2 Interfaces ---
@@ -266,6 +267,7 @@ export enum ScreenName {
   Movedex = 'Movedex',
   Abilitydex = 'Habilidades',
   Condicoes = 'Condições',
+  ImportData = 'Importar Dados',
 }
 
 // Keeping for type colors, but may need adjustment for new data structure

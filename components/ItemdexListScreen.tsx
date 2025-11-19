@@ -1,12 +1,17 @@
+
 // components/ItemdexListScreen.tsx
 import React, { useState } from 'react';
 import { Item } from '../types.ts';
-import { ITEM_DATA } from '../itemData.ts';
+import LazyImage from './LazyImage.tsx';
 
-const ItemdexListScreen: React.FC = () => {
+interface ItemdexListScreenProps {
+    items: Item[];
+}
+
+const ItemdexListScreen: React.FC<ItemdexListScreenProps> = ({ items }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredItems = ITEM_DATA.filter((item) =>
+  const filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -33,10 +38,10 @@ const ItemdexListScreen: React.FC = () => {
               className="grid grid-cols-[auto,1fr,auto] items-center w-full p-3 mb-2 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors duration-200 shadow-sm gap-4"
             >
               {/* Coluna da Imagem */}
-              <img
+              <LazyImage
                 src={item.media.sprite}
                 alt={item.name}
-                className="w-10 h-10 object-contain"
+                className="w-10 h-10"
               />
               
               {/* Coluna do Nome e Descrição */}

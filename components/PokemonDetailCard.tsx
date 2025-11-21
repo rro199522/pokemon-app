@@ -4,6 +4,7 @@ import React from 'react';
 import { Pokemon, PokemonType } from '../types.ts';
 import { ABILITY_DATA } from '../abilityData.ts';
 import { TM_DATA } from '../tmData.ts';
+import { EVOLUTION_DATA } from '../evolutionData.ts';
 import { POKEDEX_DATA } from '../pokedexData.ts';
 import { typeStyles } from './PokemonTypeIcons.tsx';
 import LazyImage from './LazyImage.tsx';
@@ -182,13 +183,18 @@ export const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, o
                              const item = ITEM_DATA.find(i => i.id === invItem.id);
                              if (!item) return null;
                              return (
-                                <div key={index} className="flex items-center bg-gray-50 p-2 rounded border border-gray-100">
-                                    <div className="w-10 h-10 bg-white rounded-full border border-gray-200 p-1 mr-3 flex-shrink-0">
+                                <div key={index} className="flex items-start bg-gray-50 p-3 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
+                                    <div className="w-12 h-12 bg-white rounded-lg border border-gray-200 p-1 mr-3 flex-shrink-0 flex items-center justify-center">
                                         <LazyImage src={item.media.sprite} alt={item.name} className="w-full h-full object-contain" />
                                     </div>
-                                    <div>
-                                        <p className="font-bold text-gray-800 text-sm">{item.name}</p>
-                                        <p className="text-xs text-gray-500 capitalize">{item.type}</p>
+                                    <div className="flex-grow">
+                                        <div className="flex justify-between items-center mb-1">
+                                            <span className="font-bold text-gray-800 text-sm">{item.name}</span>
+                                            <span className="text-[10px] font-semibold bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full capitalize">{item.type}</span>
+                                        </div>
+                                        {item.description && item.description.length > 0 && (
+                                            <p className="text-xs text-gray-600 leading-relaxed">{item.description[0]}</p>
+                                        )}
                                     </div>
                                 </div>
                              )
@@ -287,3 +293,4 @@ export const PokemonDetailCard: React.FC<PokemonDetailCardProps> = ({ pokemon, o
         </div>
     );
 };
+    
